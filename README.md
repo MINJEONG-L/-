@@ -34,6 +34,11 @@
    -  
 * 결측치 처리
    - df.isnull.sum() (df.isna.sum() 과 동일)
+   ![image](https://user-images.githubusercontent.com/82145878/178207078-dd56115c-211c-42a3-91f3-ce1d8404249e.png)  
+   - df.isna().sum().sum() #전체 결측치 개수
+   - df.drop('embark_town', axis = 1, inplace = True) 
+        ==> axis 는 0이 디폴트라 행을 삭제하는데 1이면 컬럼을 삭제함 inplace는 원본 업뎃 (원본이 업뎃되면 출력 안됨)  
+      __inplace는 오류안나는지 확인하고 넣기__  
    - df.groupby 특정조건을 그룹으로 묶어서 특정조건에 따라 여러 개의 데이터 프레임으로 쪼개지고 (출력은 안됨) 수정가능
 ![image](https://user-images.githubusercontent.com/82145878/178190778-f882e3ca-9fd8-462c-b321-0033e1200e33.png)  
 
@@ -48,6 +53,33 @@
  - 0에 가까우면 y에 있어서 x값이 잘 설명하고 못하고 있다는 것 : __관계성이 낮다__  
  
  
+ * one-hot-encoding
+ - 회귀 분석을 할 때 원핫인코딩은 필수
+ - Label encoding 의 문제 : unique 값이 1000개라면 .. 마지막 행의 값은 1000이 된다. 그러나 회귀분석은 숫자의 크기에 영향이 굉장히 많이 받음. 
+ - 숫자가 커질수록 가중치가 줄어들음. 
+ - 인코딩에서 1과 1000의 숫자 차이는 아무 의미 없지만 회귀분석에서는 문제가 생겨 분석이 안될 수 있음
+ - 사이즈를 똑같이 맞추려면 어떻게 해야할까? ==>  원핫인코딩
+ - 즉 전체사이즈가 1로 맞춰짐 분류는 원핫인코딩을 안해도 영향을 안받아서 ㄱㅊ음 그러나 회귀분석은 안된당 ㅋㅋ.
+ 
+* preprocessing 의 labelencoder라는 클래스
+- fit == > 정렬 sorting (오름차순) 
+- transform 첫번째 데이터부터 순서대로 0번부터 할당을 해줌
+- inverse_transform을 하면 디코딩... value값으로 key 값을 찾음  (dictionary 라서)
+```python
+from sklean.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+#데이터 가져오기
+items = ['tv','냉장고','전자레인지','컴퓨터','선풍기','선풍기','믹서기','믹서기'] #items는 컬럼명
+encoder.fit(items)
+#정렬하고..중복없애고.. encoder에 저장되어있음
+encoder.transform(items)
+labels = encoder.transform(items)
+```
+![image](https://user-images.githubusercontent.com/82145878/178211674-49c8e08a-e1ba-44b9-9a83-765eadaaa1cf.png)  
+    ==> labels 출력
+    
+    
+
 
 
 
