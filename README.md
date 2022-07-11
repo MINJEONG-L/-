@@ -34,6 +34,9 @@
    -  
 * 결측치 처리
    - df.isnull.sum() (df.isna.sum() 과 동일)
+   - df.groupby 특정조건을 그룹으로 묶어서 특정조건에 따라 여러 개의 데이터 프레임으로 쪼개지고 (출력은 안됨) 수정가능
+![image](https://user-images.githubusercontent.com/82145878/178190778-f882e3ca-9fd8-462c-b321-0033e1200e33.png)  
+
 
 
 
