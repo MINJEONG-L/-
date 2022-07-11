@@ -1,8 +1,13 @@
 # 머신러닝
 
 ## 빅데이터 분석절차
-  >> 기획:목적 - 필요한 데이터 수집(Data Collection) - 데이터 전처리(Data Preprocessing) - 모델 선택(Model Selection) - 평가 및 적용(Evaluation & Application)
-  >> 보통 95%가 넘어야 모델 상용화 가능 : 평가 및 적용에서 
+```mermaid
+graph LR
+A(기획:목적)-->B(필요한 데이터 수집 Data Collection)
+B-->C(데이터 전처리 Data Preprocessing)   
+C-->D(모델 선택 Model Selection)  
+D-->E(평가 및 적용 Evaluation & Application) 
+```  
 
 * titanic data 속성  
 ![image](https://user-images.githubusercontent.com/82145878/178171950-0780e7e9-a037-4468-b804-6cd022e4a0b4.png)  
@@ -45,20 +50,28 @@
     
    - 특정 컬럼(age)의 평균, 중앙값, 최대값 등등 찾기 df.age.describe()  
    ![image](https://user-images.githubusercontent.com/82145878/178245581-f882b6eb-f8e7-4f4c-b718-f5bdf90ef71d.png)  
-    >> groupby  
-    : df.groupby 특정조건을 그룹으로 묶어서 특정조건에 따라 여러 개의 데이터 프레임으로 쪼개지고 (출력은 안됨) 수정가능
+    >> **groupby**  
+   
+    df.groupby 특정조건을 그룹으로 묶어서 특정조건에 따라 여러 개의 데이터 프레임으로 쪼개지고 (출력은 안됨) 수정가능  
+      
     ```python
     group1 = df.groupby(by=['sex','pclass'])
     group1.age.median()
    ```  
    ![image](https://user-images.githubusercontent.com/82145878/178246269-deeed19d-1a57-4d18-9da9-c8e4dd015bba.png)  
-    - unstack() 사용
+   
+    - unstack() 사용  
+
     ![image](https://user-images.githubusercontent.com/82145878/178246424-970b4e4c-a26a-498f-9649-93d6b83d788a.png)  
+    
     ```python
     df_sp_grouped.iloc[0,0] #행 0 = > 여 / 1=> 남  / 열 => pclass
-    ```
+    ```  
+    
     ![image](https://user-images.githubusercontent.com/82145878/178246522-554e30d1-5ea2-4b86-9f80-e4a79688e36e.png)  
-    >> 주의 할 것
+    
+    >> 주의 할 것  
+  
     df[(df.pclass == 1) & (df.sex == 'female')].age.fillna(35,inplace = True)  **:안됨**  
     df[(df.pclass == 1) & ( df.sex == 'female')&(df.age.isna())].age = f1 **:안됨**  
     ![image](https://user-images.githubusercontent.com/82145878/178190778-f882e3ca-9fd8-462c-b321-0033e1200e33.png)  
@@ -78,51 +91,59 @@
     - 이정도의 결측치 비율이면 그냥 drop!
     - deck 컬럼 자체를 버리기 `df.drop(columns = 'deck', inplace = True)`  
     
->> 오류 주의  
-![image](https://user-images.githubusercontent.com/82145878/178247655-ed3a4b4c-4e39-4806-8b18-62838a342d9a.png)  
-  - 왜 이런 오류가 날까?
-    ==> 데이터 타입을 먼저 보자!  `df1.dtypes`
-  ![image](https://user-images.githubusercontent.com/82145878/178247779-d6c8481c-3784-4977-a0ce-1a3a229ceeee.png)  
-  - deck 의 데이터 타입은 category 
-    category 는 현재 상태에서 고정된 카테고리가 3개가 있으면 수정이 안됨 (뭔소린지는 잘 모르겠음)  
-    따라서 타입을 변경해준다 **astype()**
-  - df1.deck = df1.deck.astype('object')
-  ![image](https://user-images.githubusercontent.com/82145878/178248088-5eec491c-7c34-4321-94cf-d6d1957c2fd2.png)  
-  ==> __정상작동!__  
+    >> 오류 주의 
+ 
+    ![image](https://user-images.githubusercontent.com/82145878/178247655-ed3a4b4c-4e39-4806-8b18-62838a342d9a.png)  
+
+      - 왜 이런 오류가 날까?  
+         ==> 데이터 타입을 먼저 보자!  `df1.dtypes`  
+    
+    ![image](https://user-images.githubusercontent.com/82145878/178247779-d6c8481c-3784-4977-a0ce-1a3a229ceeee.png)  
+  
+     - deck 의 데이터 타입은 category  
+      category 는 현재 상태에서 고정된 카테고리가 3개가 있으면 수정이 안됨 (뭔소린지는 잘 모르겠음)  
+      따라서 타입을 변경해준다 **astype()**  
+     - df1.deck = df1.deck.astype('object')  
+      ![image](https://user-images.githubusercontent.com/82145878/178248088-5eec491c-7c34-4321-94cf-d6d1957c2fd2.png)  
+  
+         ==> __정상작동!__  
 
   
-* df.corr()
- - 상관관계 : 얼마나 y값을 x값이 잘 설명하고 있느냐 min = 0 max = 절대값 1  
- - 양의 상관관계 x증가 y __증가__  
- - 음의 상관관게 x증가 y __감소__  
-      => 결국 둘다 관계성이 있고 방향만 다른것임  
- - 0에 가까우면 y에 있어서 x값이 잘 설명하고 못하고 있다는 것 : __관계성이 낮다__  
+* df.corr()  
+
+   - 상관관계 : 얼마나 y값을 x값이 잘 설명하고 있느냐 min = 0 max = 절대값 1  
+   - 양의 상관관계 x증가 y __증가__  
+   - 음의 상관관게 x증가 y __감소__  
+       => 결국 둘다 관계성이 있고 방향만 다른것임  
+   - 0에 가까우면 y에 있어서 x값이 잘 설명하고 못하고 있다는 것 : __관계성이 낮다__  
+   - 
  
- 
- * one-hot-encoding
- - 회귀 분석을 할 때 `원핫인코딩`은 필수
- - Label encoding 의 문제 : unique 값이 1000개라면 .. 마지막 행의 값은 1000이 된다. 그러나 회귀분석은 숫자의 크기에 영향이 굉장히 많이 받음. 
- - 숫자가 커질수록 가중치가 줄어들음. 
- - 인코딩에서 1과 1000의 숫자 차이는 아무 의미 없지만 회귀분석에서는 문제가 생겨 분석이 안될 수 있음
- - 사이즈를 똑같이 맞추려면 어떻게 해야할까? ==>  원핫인코딩
- - 즉 전체사이즈가 1로 맞춰짐 분류는 원핫인코딩을 안해도 영향을 안받아서 ㄱㅊ음 그러나 회귀분석은 안된당 ㅋㅋ.
+* one-hot-encoding
+  - 회귀 분석을 할 때 `원핫인코딩`은 필수
+  - Label encoding 의 문제 : unique 값이 1000개라면 .. 마지막 행의 값은 1000이 된다. 그러나 회귀분석은 숫자의 크기에 영향이 굉장히 많이 받음. 
+  - 숫자가 커질수록 가중치가 줄어들음. 
+  - 인코딩에서 1과 1000의 숫자 차이는 아무 의미 없지만 회귀분석에서는 문제가 생겨 분석이 안될 수 있음
+  - 사이즈를 똑같이 맞추려면 어떻게 해야할까? ==>  원핫인코딩
+  - 즉 전체사이즈가 1로 맞춰짐 분류는 원핫인코딩을 안해도 영향을 안받아서 ㄱㅊ음 그러나 회귀분석은 안된당 ㅋㅋ.  
  
 * preprocessing 의 labelencoder라는 클래스
-- fit == > 정렬 sorting (오름차순) 
-- transform 첫번째 데이터부터 순서대로 0번부터 할당을 해줌
-- inverse_transform을 하면 디코딩... value값으로 key 값을 찾음  (dictionary 라서)
-```python
-from sklean.preprocessing import LabelEncoder
-encoder = LabelEncoder()
-#데이터 가져오기
-items = ['tv','냉장고','전자레인지','컴퓨터','선풍기','선풍기','믹서기','믹서기'] #items는 컬럼명
-encoder.fit(items)
-#정렬하고..중복없애고.. encoder에 저장되어있음
-encoder.transform(items)
-labels = encoder.transform(items)
-```
-![image](https://user-images.githubusercontent.com/82145878/178211674-49c8e08a-e1ba-44b9-9a83-765eadaaa1cf.png)  
-    ==> labels 출력
+  - fit == > 정렬 sorting (오름차순)   
+  - transform 첫번째 데이터부터 순서대로 0번부터 할당을 해줌  
+  - inverse_transform을 하면 디코딩... value값으로 key 값을 찾음  (dictionary 라서)  
+
+  ```python
+  from sklean.preprocessing import LabelEncoder
+  encoder = LabelEncoder()
+  #데이터 가져오기
+  items = ['tv','냉장고','전자레인지','컴퓨터','선풍기','선풍기','믹서기','믹서기'] #items는 컬럼명
+  encoder.fit(items)
+  #정렬하고..중복없애고.. encoder에 저장되어있음
+  encoder.transform(items)
+  labels = encoder.transform(items)
+  ```  
+
+  ![image](https://user-images.githubusercontent.com/82145878/178211674-49c8e08a-e1ba-44b9-9a83-765eadaaa1cf.png)  
+        ==> labels 출력
     
     
 
