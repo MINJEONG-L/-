@@ -22,6 +22,12 @@
 
    - 수치를 그래프로 보려면 plot()함수 사용 value_counts().plot() (내림차순)  
    - ![image](https://user-images.githubusercontent.com/82145878/178172308-55f7b43a-d529-4e41-8a0e-790bff54adb0.png)  
+   - info 확인하기  
+   - ![image](https://user-images.githubusercontent.com/82145878/178172405-52af5467-158d-4d4c-a4d9-49c6a2957b3c.png)  
+   - 연속형 데이터 타입 : 나이, 가격,   
+   - ![image](https://user-images.githubusercontent.com/82145878/178172772-dfe75f26-e081-4700-8508-2beb3767e766.png)
+
+
 
 
 
