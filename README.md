@@ -137,7 +137,8 @@ D-->E(평가 및 적용 Evaluation & Application)
     따라 집계를 해서 구조를 바꿔주어야 하는 경우  
      **재구조화(reshaping data)**  
   - 재구조화 함수
-    `pivot(), pd.pivot_table()`, `stack(), unstack()`, `melt()`, `wide_to_long()`, `pd.crosstab()` 
+    `pivot(), pd.pivot_table()`, `stack(), unstack()`, `melt()`, `wide_to_long()`, `pd.crosstab()`  
+    
     (1) 교차표 만들기 : `pd.crosstab(index, columns)`  **행과 열 위치에는 array 형식의 데이터**  
     (2) Multi-index, Multi-level로 교차표 만들기
           `pd.crosstab([id1,id2],[col1,col2])`  
@@ -147,15 +148,18 @@ D-->E(평가 및 적용 Evaluation & Application)
     
     ![image](https://user-images.githubusercontent.com/82145878/178279498-dd2502d0-78a0-4f03-8e7b-67c097272958.png)  
     
-    >> violinplot(x축, y축, hue=결과값, data=데이터)
+    >> violinplot(x축, y축, hue=결과값, data=데이터)  
     
       ![image](https://user-images.githubusercontent.com/82145878/178280198-8ad6b2be-8a08-451b-a730-a50d175081e5.png)  
       
-    >> 하나로 합치기 split=False를 True
+    >> 하나로 합치기 split=False를 True  
+   
       `sns.violinplot(x='embarked', y='age', hue= 'survived', data=df, split = True)`  
+      
       ![image](https://user-images.githubusercontent.com/82145878/178280413-c6bd85db-8fc7-4cdd-b784-360f7ab50f6e.png)  
       
-    >> inner = 'quartile' 이면 MIN MAX MED 값 표시
+    >> inner = 'quartile' 이면 MIN MAX MED 값 표시  
+   
       `ns.violinplot(x='embarked', y='age', hue= 'survived', data=df, split = True, inner = 'quartile')`  
       
       ![image](https://user-images.githubusercontent.com/82145878/178280605-383a8359-249b-4d96-86e1-f8e23a8690d9.png)  
@@ -198,11 +202,14 @@ D-->E(평가 및 적용 Evaluation & Application)
   
   >> get_dummies() 함수  
 
-  get_dummies() 함수를 사용하면 바로 원핫인코딩 가능
+  get_dummies() 함수를 사용하면 바로 원핫인코딩 가능  
+
   `pd.get_dummies(items)`  
+  
   ![image](https://user-images.githubusercontent.com/82145878/178283639-6ab96ab1-ce39-41f9-b4ec-83c26f8bc58f.png)  
   
 * df의 숫자가 아닌 데이터 타입들을 라벨링  
+
   ```python
   enlist = df.dtypes[(df.dtypes == 'object') | (df.dtypes == 'bool') | (df.dtypes == 'category')].index
   for i in enlist:
