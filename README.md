@@ -9,6 +9,8 @@ C-->D(모델 선택 Model Selection)
 D-->E(평가 및 적용 Evaluation & Application) 
 ```  
 
+
+## titanic data 실습  
 * titanic data 속성  
 ![image](https://user-images.githubusercontent.com/82145878/178171950-0780e7e9-a037-4468-b804-6cd022e4a0b4.png)  
 
@@ -116,8 +118,34 @@ D-->E(평가 및 적용 Evaluation & Application)
    - 음의 상관관게 x증가 y __감소__  
        => 결국 둘다 관계성이 있고 방향만 다른것임  
    - 0에 가까우면 y에 있어서 x값이 잘 설명하고 못하고 있다는 것 : __관계성이 낮다__  
-   - 
- 
+    ![image](https://user-images.githubusercontent.com/82145878/178252330-53d62e66-0494-42c7-a044-4629bc00fb0e.png)  
+    * heatmap으로 표현하기  
+    
+    ```python
+    sns.heatmap(df.corr(), cmap=None, annot = True, cbar=True)
+    # 데이터를 쓰고 싶다 annot = True
+    ```  
+    ![image](https://user-images.githubusercontent.com/82145878/178252624-674793c1-b2c1-4f0d-9d25-c66d81b06af0.png)  
+    ```python
+    sns.heatmap(df.corr(), cmap='coolwarm', annot = True, cbar=True)
+    # 데이터를 쓰고 싶다 annot = True
+    ```  
+    ![image](https://user-images.githubusercontent.com/82145878/178252721-3ebff9dd-1fd1-4bc2-9257-c6c84398c338.png)  
+    
+* crosstab  
+  - 데이터 분석을 하다가 원본 데이터의 구조가 분석 기법에 맞지 않아 행, 열의 위치를 바꾸거나 특정 요인에
+    따라 집계를 해서 구조를 바꿔주어야 하는 경우  
+     **재구조화(reshaping data)**  
+  - 재구조화 함수
+    `pivot(), pd.pivot_table()`, `stack(), unstack()`, `melt()`, `wide_to_long()`, `pd.crosstab()` 
+    (1) 교차표 만들기 : `pd.crosstab(index, columns)`  **행과 열 위치에는 array 형식의 데이터**  
+    (2) Multi-index, Multi-level로 교차표 만들기
+          `pd.crosstab([id1,id2],[col1,col2])`  
+    (3) 교차표의 행 이름, 열 이름 부여 : `pd.crosstab(rownames=['xx'], colnames=['aa'])`  
+    (4) 교차표의 행 합, 열 합 추가하기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], margins=True)`     (5) 구성비율로 교차표 만들기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], normalize=True)`  
+    
+    
+    
 * one-hot-encoding
   - 회귀 분석을 할 때 `원핫인코딩`은 필수
   - Label encoding 의 문제 : unique 값이 1000개라면 .. 마지막 행의 값은 1000이 된다. 그러나 회귀분석은 숫자의 크기에 영향이 굉장히 많이 받음. 
