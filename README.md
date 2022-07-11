@@ -142,10 +142,30 @@ D-->E(평가 및 적용 Evaluation & Application)
     (2) Multi-index, Multi-level로 교차표 만들기
           `pd.crosstab([id1,id2],[col1,col2])`  
     (3) 교차표의 행 이름, 열 이름 부여 : `pd.crosstab(rownames=['xx'], colnames=['aa'])`  
-    (4) 교차표의 행 합, 열 합 추가하기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], margins=True)`     (5) 구성비율로 교차표 만들기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], normalize=True)`  
+    (4) 교차표의 행 합, 열 합 추가하기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], margins=True)`  
+    (5) 구성비율로 교차표 만들기 : `pd.crosstab(data.id, [data.fac_1, data.fac_2], normalize=True)`  
     
+    ![image](https://user-images.githubusercontent.com/82145878/178279498-dd2502d0-78a0-4f03-8e7b-67c097272958.png)  
     
+    >> violinplot(x축, y축, hue=결과값, data=데이터)
     
+      ![image](https://user-images.githubusercontent.com/82145878/178280198-8ad6b2be-8a08-451b-a730-a50d175081e5.png)  
+      
+    >> 하나로 합치기 split=False를 True
+      `sns.violinplot(x='embarked', y='age', hue= 'survived', data=df, split = True)`  
+      ![image](https://user-images.githubusercontent.com/82145878/178280413-c6bd85db-8fc7-4cdd-b784-360f7ab50f6e.png)  
+      
+    >> inner = 'quartile' 이면 MIN MAX MED 값 표시
+      `ns.violinplot(x='embarked', y='age', hue= 'survived', data=df, split = True, inner = 'quartile')`  
+      
+      ![image](https://user-images.githubusercontent.com/82145878/178280605-383a8359-249b-4d96-86e1-f8e23a8690d9.png)  
+     
+   **결측치 제거하고 이상치 제거도 좋긴 하지만 이상치를 제거하지 않아도 머신러닝 돌릴 수 있음
+      encoding 안하면 머신러닝 자체가 안돌아감. 즉 문자를 숫자로 바꾸는 작업 ENCODING**  
+      
+   **회귀 분석에서는 원핫인코딩이 필수임 분류는 아니지만.**  
+      - label 인코딩에서 끝나는게 아니라 원핫인코딩을 하는 이유는?  
+
 * one-hot-encoding
   - 회귀 분석을 할 때 `원핫인코딩`은 필수
   - Label encoding 의 문제 : unique 값이 1000개라면 .. 마지막 행의 값은 1000이 된다. 그러나 회귀분석은 숫자의 크기에 영향이 굉장히 많이 받음. 
@@ -171,9 +191,31 @@ D-->E(평가 및 적용 Evaluation & Application)
   ```  
 
   ![image](https://user-images.githubusercontent.com/82145878/178211674-49c8e08a-e1ba-44b9-9a83-765eadaaa1cf.png)  
-        ==> labels 출력
-    
-    
+        ==> labels 출력  
+  `encoder.classes_  #중복제거 오름차순 `  
+  
+  `encoder.inverse_transform([2]) #매개변수가 1차원 array 여야함`  
+  
+  >> get_dummies() 함수  
+
+  get_dummies() 함수를 사용하면 바로 원핫인코딩 가능
+  `pd.get_dummies(items)`  
+  ![image](https://user-images.githubusercontent.com/82145878/178283639-6ab96ab1-ce39-41f9-b4ec-83c26f8bc58f.png)  
+  
+* df의 숫자가 아닌 데이터 타입들을 라벨링  
+  ```python
+  enlist = df.dtypes[(df.dtypes == 'object') | (df.dtypes == 'bool') | (df.dtypes == 'category')].index
+  for i in enlist:
+    encoder = LabelEncoder()
+    encoder.fit(df[i])
+    df[i] = encoder.transform(df[i])
+  ```  
+  ![image](https://user-images.githubusercontent.com/82145878/178285226-7a67fcd9-5c21-4a0d-9e39-bd34fc40ac33.png)  
+  
+  ![image](https://user-images.githubusercontent.com/82145878/178285408-034cad02-8286-44b5-960d-c3d4948d0e83.png)  
+  
+
+
 
 
 
