@@ -32,7 +32,8 @@
    -    ==>  왜 여섯개만 나올까 : 숫자형 데이터만 나옴! 텍스트 데이터는 계산을 할 수 없으니까  
    -  ![image](https://user-images.githubusercontent.com/82145878/178175958-1132c418-1840-409b-b441-cad1f4ac0c38.png)  
    -  
-
+* 결측치 처리
+   - df.isnull.sum() (df.isna.sum() 과 동일)
 
 
 
