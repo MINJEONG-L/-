@@ -229,11 +229,13 @@ D-->E(평가 및 적용 Evaluation & Application)
 1) 표준화 : STANDARDSCALER
   ![image](https://user-images.githubusercontent.com/82145878/178380580-c84e1145-0bb1-40cb-a88a-c72190034942.png)  
 
+<방법1>
 ```python
 def standard(x):
   return (x-x.mean())/(x.std())
 ```  
 
+<방법2>
 ```python
 from sklean.preprocessing import StandardScaler
 #StandardScaler 객체 생성
@@ -257,16 +259,125 @@ print(first_df_scaled.var())
   ![image](https://user-images.githubusercontent.com/82145878/178380570-aaf63d90-4e49-4994-ab15-2cc67e94fb99.png)  
   
 
+>> 머신러닝 전에 상관관계를 다시보기
+>> 문자데이터가 있어서 상관관계를 볼 수 없엇는데 지금은 인코딩햇으니까 볼 수 있음  
 
+
+## Machine Learning - 분류(Classification)  
+
+  * 데이터 분리 : 학습데이터(train) + 테스트데이터(test)  
+  ```
+  ex) X_train.shape   => (712,7)
+      y_train.shape   => (179,7)
+      X_test.shape    => (712,)
+      y_test.shape    => (179,)
+  ```  
+  
+  * Scikit Learn 사이킷런 - 모델 선택
+    - `Random Forest Simplified`,  `Logistic Regression`,  `Decision Tree Classifier`  
     
+    ![image](https://user-images.githubusercontent.com/82145878/178486110-078e30e7-37e6-481f-ba92-61111edb45d2.png)  
+    
+    ```python
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import accuracy_score
+    
+    dt_clf = DecisionTreeClassifier(random_state = 11)
+    rf_clf = RandomForestClassifier(random_state = 11)
+    lr_clf = LogisticRegression()
+    ```  
+    
+  * 교차 검증 KFold
+    ![image](https://user-images.githubusercontent.com/82145878/178488976-58883336-9f0c-463e-bfc7-4310d8872297.png)  
 
-
-
+   ```python
+   from sklearn.model_selection import KFold
+   def exec_kfold(clf, folds=5):
+   #폴드 세트를 5개인 KFold 객체를 생성, 폴드 수 만큼 예측결과 저장을 위한 리스트 객체 생성
+   kfold = KFold(n_splits = folds)
+   scores = []  
+   #KFold 교차 검증 수행
+   for iter_count, (train_index, test_index) in enumerate(kfold.split(X_titanic_df)):
+   #X_titanic_df 데이터에서 교차 검증별로 학습과 검증 데이터를 가리키는 index 생성
+   X_train, X_test = X_titanic_df.values[train_index], X_titanic_df.values[test_index]
+   y_train, y_test = y_titanic_df.values[train_index], y_titanic_df.values[test_index]
+   #Classifier 학습, 예측, 정확도 계산
+   clf.fit(X_train, y_train)
+   predictinos = clf.predict(X_test)
+   accuracy = accuracy_score(y_test, predictions)
+   scores.append(accuracy)
+   print("교차 검증 {0} 정확도 : {1:4f}".format(iter_count, accuracy))
+   
+    #5개 fold에서의 평균 정확도 계산
+    mean_score = np.mean(scores)
+    print('평균 정확도:{0:.4f}".format(mean_score))
+    ```  
+  
+    * 만약 1의 분포가 5% 내외라서 일부 검증 레이블 데이터 분포가 극단적이라면?
+      - 예) 0:880 , 1:11 개 라면 아주 극단적으로 한 데이터셋에 음성이 전부 들어갈 수도 있음
+      - positive, negative ratio 를 계속 가지고 가자! ==> stratifiedKFold
+   
+        `kfold는 x나 y나 아무거나 넣어도 됨` : 둘 다 같은 인덱스를 가지고 있어서
+         **그러나** `skfold에서는 y값이 꼭 필요`  
+         
+  * 교차 검증 StratifiedKFold  
+  ```python
+  from sklearn.model_selection import StratifiedKFold
+  
+  skf = StratifiedKFold(n_splits = 5)
+  num = 0
+  
+  for train_index, test_index in skf.split(df_train, df_train['Survived']):
+    num += 1
+    label_train = df_train['Survived'].iloc[train_index]
+    label_test = df_train['Survived'].iloc[test_index]
+    print("교차 검증: {0}".format(num))
+    print('학습 레이블 데이터 분포:\n', label_train.value_count())
+    print('검증 레이블 데이터 분포:\n', label_test.value_counts())
+    
+  ```  
+  
+  ```python
+  skfold = StratifiedKFold(n_splits = 5)
+  n_iter = 0 
+  cv_accuracy = []
+  
+  #StratifiedKFold의 split() 호출 시 반드시 레이블 데이터 세트도 추가 입력 필요
+  for train_index, test_index in skfold.split(X_titanic_df, y_titanic_df):
+    #split() 으로 반환된 인덱스를 이용해 학습용, 검증용 테스트 데이터 추출
+    X_train, X_test = X_titanic_df.values[train_index], X_titanic_df.values[test_index]
+    y_train, y_test = y_titanic_df.values[train_index], y_titanic_df.values[test_index]
+    #학습 및 에측
+    dt_clf.fit(X_train, y_train)
+    pred = dt_clf.predict(X_test)
+    
+    #반복 시마다 정확도 측정
+    n_iter += 1
+    accuracy = np.round(accuracy_score(y_test,pred),4)
+    train_size = X_train.shape[0]
+    test_size = X_test.shape[0]
+    print('\n#{0} 교차 검증 정확도 :{1}, 학습 데이터 크기: {2}, 검증 데이터 크기: {3}'format(n_iter, accuracy, train_size, test_size))
+     cv_accuracy.append(accuracy)
+    # 교차 검증별 정확도 및 평균 정확도 계산
+     print('\n## 교차 검증별 정확도:', np.round(cv_accuracy, 4))
+     print('## 평균 검증 정확도:', np.mean(cv_accuracy))     
+  ```  
+  
+  * 교차 검증 Cross_Val_Score
+  ```python
+  from sklearn.model_selection import cross_val_score
+  
+  for MLMD in [dt_clf, rf_clf, lr_clf]:
+    scores = cross_val_score(MLMD, X_titanic_df, y_titanic_df, cv = 5)
+    for iter_count, accuracy in enumerate(scores):
+      print("교차 검증 {0} 정확도: {1:.4f}".format(iter_count, accuracy))
+    print("평균 정확도: {0:.4f}".format(np.mean(scores))
+  ```
 <img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
 
-  >> 머신러닝 전에 상관관계를 다시보기
-  >> 문자데이터가 있어서 상관관계를 볼 수 없엇는데 지금은 인코딩햇으니까 볼 수 있음
-
+ 
 
 
 
