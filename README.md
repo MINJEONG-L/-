@@ -239,7 +239,7 @@ D-->E(평가 및 적용 Evaluation & Application)
 
 
 
-
+<img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
 
 
 
