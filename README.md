@@ -226,8 +226,31 @@ D-->E(평가 및 적용 Evaluation & Application)
   
 ## Feature Scaling  
 
-1) 표준화  
+1) 표준화 : STANDARDSCALER
   ![image](https://user-images.githubusercontent.com/82145878/178380580-c84e1145-0bb1-40cb-a88a-c72190034942.png)  
+
+```python
+def standard(x):
+  return (x-x.mean())/(x.std())
+```  
+
+```python
+from sklean.preprocessing import StandardScaler
+#StandardScaler 객체 생성
+scaler = StandardScaler()
+
+#StandardScaler로 데이터 세트 변환. fit()과 transform()호출
+scaler.fit(df_train)
+first_scaled = scaler.transform(df_train)
+
+#transform() 시 스케일 변환된 데이터 세트가 Numpy ndarray로 반환돼 이를 DataFrame으로 변환
+first_df_scaled = pd.DataFrame(data=first_scaled, columns = list(df_train.columns))
+print('feature들의 평균값')
+print(first_df_scaled.mean())
+print('\nfeature들의 분산값')
+print(first_df_scaled.var())
+```  
+![image](https://user-images.githubusercontent.com/82145878/178484674-40fb7ee3-f7ce-4707-ad4e-35e5f409fa6a.png)  
 
 
 2) 정규화  
