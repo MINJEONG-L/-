@@ -377,7 +377,14 @@ print(first_df_scaled.var())
   ```
 <img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
 
+  >> kfold가 남아있는 이유 : 근본적으로 skfold는 positive, negative ratio 비율을 확인하기 위해서 y값이 꼭 필요함
+  >> skfold는 연속값을 측정할 때 (회귀)는 사용할 수 없음 ==> 모든 비율을 측정할 수 없기 때문에
+  >> 회귀에서는 kfold를 씁니다 이진분류면 skfold 가능  
+
+
  
+## 최적 하이퍼 파라미터
+
 
 
 
