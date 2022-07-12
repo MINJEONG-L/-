@@ -313,7 +313,7 @@ print(first_df_scaled.var())
     #5개 fold에서의 평균 정확도 계산
     mean_score = np.mean(scores)
     print('평균 정확도:{0:.4f}".format(mean_score))
-    ```  
+   ```  
   
     * 만약 1의 분포가 5% 내외라서 일부 검증 레이블 데이터 분포가 극단적이라면?
       - 예) 0:880 , 1:11 개 라면 아주 극단적으로 한 데이터셋에 음성이 전부 들어갈 수도 있음
@@ -323,6 +323,7 @@ print(first_df_scaled.var())
          **그러나** `skfold에서는 y값이 꼭 필요`  
          
   * 교차 검증 StratifiedKFold  
+  
   ```python
   from sklearn.model_selection import StratifiedKFold
   
