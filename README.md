@@ -375,7 +375,6 @@ print(first_df_scaled.var())
       print("교차 검증 {0} 정확도: {1:.4f}".format(iter_count, accuracy))
     print("평균 정확도: {0:.4f}".format(np.mean(scores))
   ```
-<img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
 
   >> kfold가 남아있는 이유 : 근본적으로 skfold는 positive, negative ratio 비율을 확인하기 위해서 y값이 꼭 필요함
   >> skfold는 연속값을 측정할 때 (회귀)는 사용할 수 없음 ==> 모든 비율을 측정할 수 없기 때문에
@@ -385,8 +384,30 @@ print(first_df_scaled.var())
  
 ## 최적 하이퍼 파라미터
 
+   - 하이퍼 파라미터를 손대서 교차검증을 하겠다!  `하이퍼 파라미터 튜닝`은 필수!!  
+   
+   ```python
+   from sklearn.model_selection import GridSearchCV
+   parameters1 = {'max_depth':[1,2,3,4,5,6,7,8,9,10],
+                  'min_samples_split':[2,3,4,5,6,7,8,9,10], 'min_samples_leaf':[1,2,3,4,5,6,7,8,9,10]}
+   grid_dclf = GridSearchCV(dt_clf, param_grid=parameters, scoring='accuracy', cv = 5)
+   grid_dclf.fit(X_train, y_train)
+   
+   print("GridSearchCV 최적 하이퍼 파라미터:', grid_dclf.best_params_)
+   print("GridSearchCV 최고 정확도 : {0:.4f}'.format(grid_dclf.best_score_))
+   best_dclf = grid_dclf.best_estimator_
+   
+   #GridSEarchCV 의 최적 하이퍼 파라미터로 학습된 Estimator로 예측 및 평가 수행
+   dpredictions = best_dclf.predict(X_test)
+   accuracy = accuracy_score(y_test, dpredictions)
+   print('테스트 세트에서의 DecisionTreeClassifier 정확도 : {0:.4f}'.format(accuracy))
+   ```  
+   
+   ![image](https://user-images.githubusercontent.com/82145878/178518484-b9c22406-f08d-4679-9ca6-5ae4ec0df9c4.png)  
+   
+   
 
 
 
-
+<img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
   
