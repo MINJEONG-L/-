@@ -223,7 +223,19 @@ D-->E(평가 및 적용 Evaluation & Application)
   
   
 # 2일차  
+  
+## Feature Scaling  
 
+1) 표준화  
+  ![image](https://user-images.githubusercontent.com/82145878/178380580-c84e1145-0bb1-40cb-a88a-c72190034942.png)  
+
+
+2) 정규화  
+  ![image](https://user-images.githubusercontent.com/82145878/178380570-aaf63d90-4e49-4994-ab15-2cc67e94fb99.png)  
+  
+
+
+    
 
 
 
