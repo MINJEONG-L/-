@@ -241,6 +241,10 @@ D-->E(평가 및 적용 Evaluation & Application)
 
 <img src=https://user-images.githubusercontent.com/82145878/172035324-2b35272c-1325-4a77-9016-bbd2d3048be9.png width="80%" height="80%"/>  
 
+  >> 머신러닝 전에 상관관계를 다시보기
+  >> 문자데이터가 있어서 상관관계를 볼 수 없엇는데 지금은 인코딩햇으니까 볼 수 있음
+
+
 
 
 
