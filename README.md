@@ -436,8 +436,34 @@ cv summary.....뭐지..
     : MAE, MSE, RMSE, R^2 . . .
    2) 분류 성능 평가 지표
     : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC . .. 
+    (1) 정확도 Accuracy  
+    - (예측 결과과 실제 결과와 동일한 데이터 건수) / (전체 예측 데이터 건수)  
+    ```python
+    from sklearn.base import BaseEstimator
+    ```
+    (2) 오차행렬 Confusion Matrix  
+    ```python
+    from sklean.metrics import confusion_matrix
+    confusion_matrix(y_test, mypredictions)
+    pd.DataFrame(confusion_matrix(y_test, mypredictinos), columns=['0','1'])
+    ```  
+    |---|---|pre|pre|
+    |---|---|0|1|
+    |act|0|TN|FP|
+    |act|1|FN|TP|  
+    
+    
+    
+    ![image](https://user-images.githubusercontent.com/82145878/178671990-f9e93768-14dc-4215-897e-74fcaa19eff9.png)  
+    ![image](https://user-images.githubusercontent.com/82145878/178672034-f0b89c21-ebe5-40a9-8062-de4311bf7053.png)  
     
 
+
+    ![image](https://user-images.githubusercontent.com/82145878/178671961-c04789fb-0419-4519-8c81-4071e36d4a72.png)  
+    
+  
+  
+      
 
 
 
