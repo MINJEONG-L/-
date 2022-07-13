@@ -444,15 +444,34 @@ cv summary.....뭐지..
     (2) 오차행렬 Confusion Matrix  
     ```python
     from sklean.metrics import confusion_matrix
-    confusion_matrix(y_test, mypredictions)
-    pd.DataFrame(confusion_matrix(y_test, mypredictinos), columns=['0','1'])
+    confusion_matrix(y_test, mypredictions) #confusion_matrix(실제값, 예측값) 
     ```  
-    |---|---|pre|pre|
-    |---|---|0|1|
-    |act|0|TN|FP|
-    |act|1|FN|TP|  
     
+    - 출력값이 초록색 네모(TP, TN, FP, FN)에 맞춰서 나옴
+    - FP 는 잘 안나옴, TP는 거의 의미가 없다(정상인을 정상인이라고 맞추는 것은 의미가 없음)  
+    - FN 은 임산부인데 임산부가 아니라고 한것  
+        ==> 제일 위험! FN을 낮추는게 젤 중요  
+    - 찾고자하는 것 : `positive`  
+    - 정밀도, 재현율에서 TN은 거의 사용 x  
+    - 정밀도 : `예측값`이 Positive 인 것 중에서 TP를 보는 것  **FP가 중요**  
+    - 재현율 : `실제값`이 Positive 인 것 중에서 TP를 보는 것  **FN이 중요**  
+    - FP 커질수록 정밀도가 낮아지고 FN이 커질수록 재현율이 낮아진다. 즉 반비례한 관계로, 그 절충을 찾는 것이 중요  
+    ex) 암판단은 `재현율`이 중요!  
+    ex) 법률 판단은 `정밀도`가 중요
     
+<!--     
+    ||| pre | pre |
+    |---|---|---|---|
+    ||| 0 | 1 |
+    | act | 0 | TN | FP |  
+    | act | 1 | FN | TP |  
+
+     | 옵션 | 내용 | 옵션 | 내용 |
+  | :---: | --- | :---: | --- |
+  |-e|모든 프로세스|-u|각 프로세서의 사용자 이름과 시작 시간을 보여줌|
+  |-f|완전한 포맷, 모든 정보 출력|-w|긴 형태로 출력하며 한 행 안에 출력이 잘리지 않음|
+  |-l|긴 포맷, 자세한 형태의 정보 출력|-h|헤더를 출력하지 않음|
+   -->
     
     ![image](https://user-images.githubusercontent.com/82145878/178671990-f9e93768-14dc-4215-897e-74fcaa19eff9.png)  
     ![image](https://user-images.githubusercontent.com/82145878/178672034-f0b89c21-ebe5-40a9-8062-de4311bf7053.png)  
