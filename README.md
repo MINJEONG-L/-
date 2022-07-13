@@ -457,6 +457,18 @@ cv summary.....뭐지..
         - FN 은 임산부인데 임산부가 아니라고 한것  
             ==> 제일 위험! FN을 낮추는게 젤 중요  
         - 찾고자하는 것 : `positive`  
+        
+        
+        
+        
+        ||PRE|PRE|PRE|
+        |---|---|---|---|
+        |ACT||0|1|
+        |ACT|0|TN|FP|
+        |ACT|1|FN|TP|
+        
+        
+        
       (3) 정밀도(Precision)& 재현율(Recall)  
     
         - 정밀도, 재현율에서 TN은 거의 사용 x  
@@ -526,10 +538,13 @@ cv summary.....뭐지..
       (4) F1 스코어
        - f값  
        ![image](https://user-images.githubusercontent.com/82145878/178716191-0acf4128-7e41-45f1-8bbb-8400bd54b31d.png)  
+       
+       
        ||precision|recall|F1|
        |---|---|---|---|
        |A|0.9|0.1|0.18|
        |B|0.5|0.5|0.5|
+       
        
         ==> 둘 중 하나만 크면 안되고 둘 다 적당해야 f값이 작아지지 않음  
         
