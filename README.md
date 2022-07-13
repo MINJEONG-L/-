@@ -435,93 +435,147 @@ cv summary.....뭐지..
     : MAE, MSE, RMSE, R^2..  
     
    2) 분류 성능 평가 지표  
-    : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC..  
+    : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC... 
     
-    (1) 정확도 Accuracy  
+      (1) 정확도 Accuracy  
     
-    - (예측 결과과 실제 결과와 동일한 데이터 건수) / (전체 예측 데이터 건수)  
+        - (예측 결과과 실제 결과와 동일한 데이터 건수) / (전체 예측 데이터 건수)  
     
-    ```python
-    from sklearn.base import BaseEstimator
-    ```  
+       ```python
+       from sklearn.base import BaseEstimator
+       ```  
     
-    (2) 오차행렬 Confusion Matrix  
+      (2) 오차행렬 Confusion Matrix  
     
-    ```python
-    from sklean.metrics import confusion_matrix
-    confusion_matrix(y_test, mypredictions) #confusion_matrix(실제값, 예측값) 
-    ```  
+        ```python
+        from sklean.metrics import confusion_matrix
+        confusion_matrix(y_test, mypredictions) #confusion_matrix(실제값, 예측값) 
+        ```  
     
-    - 출력값이 초록색 네모(TP, TN, FP, FN)에 맞춰서 나옴
-    - FP 는 잘 안나옴, TP는 거의 의미가 없다(정상인을 정상인이라고 맞추는 것은 의미가 없음)  
-    - FN 은 임산부인데 임산부가 아니라고 한것  
-        ==> 제일 위험! FN을 낮추는게 젤 중요  
-    - 찾고자하는 것 : `positive`  
-    (3) 정밀도(Precision)& 재현율(Recall)  
+        - 출력값이 초록색 네모(TP, TN, FP, FN)에 맞춰서 나옴
+        - FP 는 잘 안나옴, TP는 거의 의미가 없다(정상인을 정상인이라고 맞추는 것은 의미가 없음)  
+        - FN 은 임산부인데 임산부가 아니라고 한것  
+            ==> 제일 위험! FN을 낮추는게 젤 중요  
+        - 찾고자하는 것 : `positive`  
+      (3) 정밀도(Precision)& 재현율(Recall)  
     
-    - 정밀도, 재현율에서 TN은 거의 사용 x  
-    - 정밀도 : `예측값`이 Positive 인 것 중에서 TP를 보는 것  **FP가 중요**  
-              실제 음성인 데이터 예측을 양성으로 잘못 판단 시 업무상 큰 영향이 발생하는 경우  
+        - 정밀도, 재현율에서 TN은 거의 사용 x  
+        - 정밀도 : `예측값`이 Positive 인 것 중에서 TP를 보는 것  **FP가 중요**  
+                실제 음성인 데이터 예측을 양성으로 잘못 판단 시 업무상 큰 영향이 발생하는 경우  
               ![image](https://user-images.githubusercontent.com/82145878/178678230-efd67447-971b-406b-89c2-c6aa9e147f50.png)  
 
-    - 재현율 : `실제값`이 Positive 인 것 중에서 TP를 보는 것  **FN이 중요**  
+        - 재현율 : `실제값`이 Positive 인 것 중에서 TP를 보는 것  **FN이 중요**  
               실제 양성 데이터를 음성으로 잘못 판단 시 업무 상 큰 영향이 발생하는 경우  
               ![image](https://user-images.githubusercontent.com/82145878/178678287-e4e858b8-b393-4224-b91b-c295d103f23d.png)  
          
-    - FP 커질수록 정밀도가 낮아지고 FN이 커질수록 재현율이 낮아진다. 즉 반비례한 관계로, 그 절충을 찾는 것이 중요  
-    ex) 암판단은 `재현율`이 중요!  
-    ex) 법률 판단은 `정밀도`가 중요
-      `confusion_matrix` **만 알면**  `precision_score`, `accuracy_score`, `recall_score`, **쉽게 구할수 있음**  
+        - FP 커질수록 정밀도가 낮아지고 FN이 커질수록 재현율이 낮아진다. 즉 반비례한 관계로, 그 `절충`을 찾는 것이 중요  
+          ex) 암판단은 `재현율`이 중요!  
+          ex) 법률 판단은 `정밀도`가 중요
+        `confusion_matrix` **만 알면**  `precision_score`, `accuracy_score`, `recall_score`, **쉽게 구할수 있음**  
       
-      ```python
-      from sklean.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
-      def get_clf_eval(y_test, pred):
-        confusion = confusion_matrix(y_test, pred)
-        accuracy = accuracy_score(y_test, pred)
-        precision = precision_score(y_test, pred)
-        recall = recall_score(y_test, pred)
-        print('오차 행렬')
-        print(confusion)
-        print('정확도: {0:.4f}, 정밀도: {1:.4f}, 재현율:{2:.4f}'.format(accuracy, precision, recall))
-      ```  
-      (4) TRADE-OFF  
-      ![image](https://user-images.githubusercontent.com/82145878/178679362-21f5edc7-7a5b-49f0-b1de-d28a6c827d6f.png)  
-      - threshold 값보다 작으면 0 크면 1 이런 식..  
-      ```python
-      from sklearn.preprocessing import Binarizer
-      X = [[1,-1,2],
-      [2, 0, 0], 
-      [0, 1.1, 1.2]]
-      binarizer = Binarizer(threshold = 1.1)
-      print(binarizer.fit_transform(X))
-      ```  
-      
+        ```python
+        from sklean.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+        def get_clf_eval(y_test, pred):
+          confusion = confusion_matrix(y_test, pred)
+          accuracy = accuracy_score(y_test, pred)
+          precision = precision_score(y_test, pred)
+          recall = recall_score(y_test, pred)
+          print('오차 행렬')
+          print(confusion)
+          print('정확도: {0:.4f}, 정밀도: {1:.4f}, 재현율:{2:.4f}'.format(accuracy, precision, recall))
+        ```  
+        
+       [-] TRADE-OFF  
+            ![image](https://user-images.githubusercontent.com/82145878/178679362-21f5edc7-7a5b-49f0-b1de-d28a6c827d6f.png)  
+          - threshold 값보다 작으면 0 크면 1 이런 식..  
+            
+         ```python
+         from sklearn.preprocessing import Binarizer
+         X = [[1,-1,2],
+             [2, 0, 0], 
+             [0, 1.1, 1.2]]
+         binarizer = Binarizer(threshold = 1.1)
+         print(binarizer.fit_transform(X))
+         ```  
+                
+      ![image](https://user-images.githubusercontent.com/82145878/178715031-a766dbaa-c25d-4505-b60c-a7b2cc0dc28b.png)  
+      ![image](https://user-images.githubusercontent.com/82145878/178715104-7f2d0afd-3974-4e36-aa30-974cee3a6c4c.png)  
+    
+       ```python
+       thresholds = [0.4,0.45,0.5,0.55,0.6]
+         
+       acc = []
+       pre = []
+       re = []
+       f1 = []
+       def get_eval_by_threshold(y_test, pred_proba1, thresholds):
+          for custom_threshold in thresholds:
+             binarizer = Binarizer(threshold=custom_threshold).fit(pred_proba1)
+             custom_predict = binarizer.transform(pred_proba1)
+             a,b,c,d = get_clf_eval(y_test, custom_predict)
+             acc.append(a)
+             pre.append(b)
+             re.append(c)
+             f1.append(d)
+             get_eval_by_threshold(y_test, pred_proba[:,1].reshape(-1,1), thresholds)
+       ```  
+     
       ![image](https://user-images.githubusercontent.com/82145878/178680147-e6ad8089-f054-484e-8789-ea32696a0b96.png)  
       ![image](https://user-images.githubusercontent.com/82145878/178680354-a3f78290-c00e-4484-9335-86bea7ef30fb.png)  
       
+      (4) F1 스코어
+       - f값  
+       ![image](https://user-images.githubusercontent.com/82145878/178716191-0acf4128-7e41-45f1-8bbb-8400bd54b31d.png)  
+       ||precision|recall|F1|
+       |---|---|---|---|
+       |A|0.9|0.1|0.18|
+       |B|0.5|0.5|0.5|
+       
+        ==> 둘 중 하나만 크면 안되고 둘 다 적당해야 f값이 작아지지 않음  
+        
+       (5) ROC AUC  
+       - ROC : Receiver Operation Characteristic Curve 수신자 판단 곡선  
+       - 머신러닝 이진 분류 모델의 예측 성능 판단에 중요한 평가 지표
+       ![image](https://user-images.githubusercontent.com/82145878/178719296-e2aefe82-dda8-4897-9824-f1c5aff9e529.png)  
+       - TPR = TP/(FN+TP) 재현율  
+       - TNR = TN/(FP+TN)
+       - FPR = FP/(FP+TN)
+       - FPR = 1 - TNR 
+       >> FPR -> 0  
+          - 분류 결정 임곗값 -> 1  
+          - FP/(FP+TN)  
+          - Positive 예측 기준이 Max  
+          - Positive가 틀릴 확률 0  
+          - Positive 선택 0  
+          - FP는 항상 0  
+          
+          
+       >> FPR -> 1  
+          - FP/(FP+TN)
+          - 분류 결정 임계값 -> 0  
+          - 모두 Positive로 예측  
+          - Negative 예측 확률이 0 -> TN = 0  
+          
+       - AUC : Area Under Curve  
+       ![image](https://user-images.githubusercontent.com/82145878/178721883-b0f8a459-9655-4a1b-a816-7f99766454ed.png)  
 
+       - ROC 곡선 밑의 면적  
+       - 1에 가까울 수록 좋은 수치  
+       - FPR이 작은 상태에서 TPR이 커지는 것  
+       - 가운데 대각선은 동전 던지기 수준의 AUC 값  
+       - 보통 분류는 0.5이상의 AUC 값  
+       
+          ```python
+          from sklearn.metrics import roc_auc_score
+          pred = lr_clf.predict(X_test)
+          roc_score = roc_auc_score(y_test, pred)
+          print("ROC AUC 값 : {0:.4f}'.format(roc_score))
+          ```  
+          
 
-
-<!--     
-    ||| pre | pre |
-    |---|---|---|---|
-    ||| 0 | 1 |
-    | act | 0 | TN | FP |  
-    | act | 1 | FN | TP |  
-
-     | 옵션 | 내용 | 옵션 | 내용 |
-  | :---: | --- | :---: | --- |
-  |-e|모든 프로세스|-u|각 프로세서의 사용자 이름과 시작 시간을 보여줌|
-  |-f|완전한 포맷, 모든 정보 출력|-w|긴 형태로 출력하며 한 행 안에 출력이 잘리지 않음|
-  |-l|긴 포맷, 자세한 형태의 정보 출력|-h|헤더를 출력하지 않음|
-   -->
-    
-    ![image](https://user-images.githubusercontent.com/82145878/178671990-f9e93768-14dc-4215-897e-74fcaa19eff9.png)  
-    ![image](https://user-images.githubusercontent.com/82145878/178672034-f0b89c21-ebe5-40a9-8062-de4311bf7053.png)  
-    
-
-
-    ![image](https://user-images.githubusercontent.com/82145878/178671961-c04789fb-0419-4519-8c81-4071e36d4a72.png)  
+       ![image](https://user-images.githubusercontent.com/82145878/178671990-f9e93768-14dc-4215-897e-74fcaa19eff9.png)  
+       ![image](https://user-images.githubusercontent.com/82145878/178672034-f0b89c21-ebe5-40a9-8062-de4311bf7053.png)  
+       ![image](https://user-images.githubusercontent.com/82145878/178671961-c04789fb-0419-4519-8c81-4071e36d4a72.png)  
     
   
   
