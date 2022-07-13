@@ -407,6 +407,15 @@ print(first_df_scaled.var())
    ![image](https://user-images.githubusercontent.com/82145878/178518484-b9c22406-f08d-4679-9ca6-5ae4ec0df9c4.png)  
    
    
+# 3일차  
+
+## wine data 활용하기  
+  - 드라이브에서 데이터 불러오기
+  ```python
+  df_red = pd.read_table(path + 'winequality-red (1).csv' ,sep=';') #table csv 둘다 맞음
+  df_white = pd.read_csv(path + 'winequality-white (1).csv', sep=';' )
+  ```  
+  
 
 
 
