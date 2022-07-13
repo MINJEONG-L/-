@@ -418,15 +418,25 @@ print(first_df_scaled.var())
   
 cv summary.....뭐지..
 
-## 이제 머신러닝 평가를 해보자   
+## 평가 및 적용 : 이제 머신러닝 평가를 해보자   
 
-* 평가지표  
+  * 평가지표  
 
-네가지의 녹색 부분만 신경을 쓰자  
+    `네가지의 녹색 부분만 신경을 쓰자`  
 
-![image](https://user-images.githubusercontent.com/82145878/178638967-7718c539-420b-4340-baa1-c4a021630591.png)  
+    ![image](https://user-images.githubusercontent.com/82145878/178638967-7718c539-420b-4340-baa1-c4a021630591.png)  
 
-true posivite  -> positive 로 예측했는데 true였따
+    - true posivite(TP) -> positive 로 예측했는데 true 였다.  
+    - true negative(TN) -> negative 로 예측했는데 true 였다.  
+    - false posivite(FP) -> positive 로 예측했는데 false 였다.  
+    - false negative(FN) -> negative 로 예측했는데 false 였다.  
+    
+    
+   1) 회귀 성능 평가 지표  
+    : MAE, MSE, RMSE, R^2 . . .
+   2) 분류 성능 평가 지표
+    : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC . .. 
+    
 
 
 
