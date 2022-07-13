@@ -416,6 +416,18 @@ print(first_df_scaled.var())
   df_white = pd.read_csv(path + 'winequality-white (1).csv', sep=';' )
   ```  
   
+cv summary.....뭐지..
+
+## 이제 머신러닝 평가를 해보자   
+
+* 평가지표  
+
+네가지의 녹색 부분만 신경을 쓰자  
+
+![image](https://user-images.githubusercontent.com/82145878/178638967-7718c539-420b-4340-baa1-c4a021630591.png)  
+
+true posivite  -> positive 로 예측했는데 true였따
+
 
 
 
