@@ -336,8 +336,7 @@ print(first_df_scaled.var())
     label_test = df_train['Survived'].iloc[test_index]
     print("교차 검증: {0}".format(num))
     print('학습 레이블 데이터 분포:\n', label_train.value_count())
-    print('검증 레이블 데이터 분포:\n', label_test.value_counts())
-    
+    print('검증 레이블 데이터 분포:\n', label_test.value_counts()) 
   ```  
   
   ```python
@@ -433,15 +432,21 @@ cv summary.....뭐지..
     
     
    1) 회귀 성능 평가 지표  
-    : MAE, MSE, RMSE, R^2 . . .
-   2) 분류 성능 평가 지표
-    : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC . .. 
+    : MAE, MSE, RMSE, R^2..  
+    
+   2) 분류 성능 평가 지표  
+    : 정확도, 오차행렬, 정밀도, F1스코어, ROC AUC..  
+    
     (1) 정확도 Accuracy  
+    
     - (예측 결과과 실제 결과와 동일한 데이터 건수) / (전체 예측 데이터 건수)  
+    
     ```python
     from sklearn.base import BaseEstimator
-    ```
+    ```  
+    
     (2) 오차행렬 Confusion Matrix  
+    
     ```python
     from sklean.metrics import confusion_matrix
     confusion_matrix(y_test, mypredictions) #confusion_matrix(실제값, 예측값) 
@@ -452,13 +457,51 @@ cv summary.....뭐지..
     - FN 은 임산부인데 임산부가 아니라고 한것  
         ==> 제일 위험! FN을 낮추는게 젤 중요  
     - 찾고자하는 것 : `positive`  
+    (3) 정밀도(Precision)& 재현율(Recall)  
+    
     - 정밀도, 재현율에서 TN은 거의 사용 x  
     - 정밀도 : `예측값`이 Positive 인 것 중에서 TP를 보는 것  **FP가 중요**  
+              실제 음성인 데이터 예측을 양성으로 잘못 판단 시 업무상 큰 영향이 발생하는 경우  
+              ![image](https://user-images.githubusercontent.com/82145878/178678230-efd67447-971b-406b-89c2-c6aa9e147f50.png)  
+
     - 재현율 : `실제값`이 Positive 인 것 중에서 TP를 보는 것  **FN이 중요**  
+              실제 양성 데이터를 음성으로 잘못 판단 시 업무 상 큰 영향이 발생하는 경우  
+              ![image](https://user-images.githubusercontent.com/82145878/178678287-e4e858b8-b393-4224-b91b-c295d103f23d.png)  
+         
     - FP 커질수록 정밀도가 낮아지고 FN이 커질수록 재현율이 낮아진다. 즉 반비례한 관계로, 그 절충을 찾는 것이 중요  
     ex) 암판단은 `재현율`이 중요!  
     ex) 법률 판단은 `정밀도`가 중요
-    
+      `confusion_matrix` **만 알면**  `precision_score`, `accuracy_score`, `recall_score`, **쉽게 구할수 있음**  
+      
+      ```python
+      from sklean.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+      def get_clf_eval(y_test, pred):
+        confusion = confusion_matrix(y_test, pred)
+        accuracy = accuracy_score(y_test, pred)
+        precision = precision_score(y_test, pred)
+        recall = recall_score(y_test, pred)
+        print('오차 행렬')
+        print(confusion)
+        print('정확도: {0:.4f}, 정밀도: {1:.4f}, 재현율:{2:.4f}'.format(accuracy, precision, recall))
+      ```  
+      (4) TRADE-OFF  
+      ![image](https://user-images.githubusercontent.com/82145878/178679362-21f5edc7-7a5b-49f0-b1de-d28a6c827d6f.png)  
+      - threshold 값보다 작으면 0 크면 1 이런 식..  
+      ```python
+      from sklearn.preprocessing import Binarizer
+      X = [[1,-1,2],
+      [2, 0, 0], 
+      [0, 1.1, 1.2]]
+      binarizer = Binarizer(threshold = 1.1)
+      print(binarizer.fit_transform(X))
+      ```  
+      
+      ![image](https://user-images.githubusercontent.com/82145878/178680147-e6ad8089-f054-484e-8789-ea32696a0b96.png)  
+      ![image](https://user-images.githubusercontent.com/82145878/178680354-a3f78290-c00e-4484-9335-86bea7ef30fb.png)  
+      
+
+
+
 <!--     
     ||| pre | pre |
     |---|---|---|---|
