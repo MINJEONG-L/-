@@ -99,17 +99,17 @@
   - Group average distance(Average linkage)  
   - Between centroids distance(Centroid linage)  
  
-  * 장점 
-  - 군집 구조 정보가 매우 풍부  
-  - 군집화의 결과가 stable하게 생성  
-  - 임의의 모양을 갖는 군집을 생성  
+  * 장점   
+    - 군집 구조 정보가 매우 풍부  
+    - 군집화의 결과가 stable하게 생성  
+    - 임의의 모양을 갖는 군집을 생성  
 
   * 단점
-  - 계산 복잡도가 높다.  
-  - 메모리 확보 필요  
+    - 계산 복잡도가 높다.  
+    - 메모리 확보 필요  
  
   * 이슈
-  - is it possible to cut dynaically a hierarchical cluster tree?  
+    - is it possible to cut dynaically a hierarchical cluster tree?  
   
   ![image](https://user-images.githubusercontent.com/82145878/179245725-9df9e222-aec9-4293-917b-3bdf9898b002.png)  
   ![image](https://user-images.githubusercontent.com/82145878/179245782-02db1614-ae6a-4565-9551-9cd75379d99e.png)  
@@ -117,36 +117,43 @@
   3) DBSCAN - Density Based Spatial Clustering of Applications with Noise  
   ![image](https://user-images.githubusercontent.com/82145878/179246549-047f2054-efcb-4313-8df8-765a46cd26d8.png)  
   
-    * 그룹화  
+   * 그룹화  
     ![image](https://user-images.githubusercontent.com/82145878/179246689-ad98b110-1946-46ef-8efe-5d3831f6ebe6.png)  
     ![image](https://user-images.githubusercontent.com/82145878/179246995-3168d5e9-7955-4f8f-9067-b4efbaf4e03c.png)  
     
-    * Heuristics  
+   * Heuristics  
     ![image](https://user-images.githubusercontent.com/82145878/179247699-225b2410-395a-4b23-8e4a-d26367752f00.png)  
-    Eps ↑, samples ↑  
-    Eps ↑, samples ↓  
-    Eps ↓, samples ↑  
-    Eps ↓, samples ↓  
+    
+   Eps ↑, samples ↑  
+   Eps ↑, samples ↓  
+   Eps ↓, samples ↑  
+   Eps ↓, samples ↓  
 
    ![image](https://user-images.githubusercontent.com/82145878/179248400-90a86bc1-4c7c-4cbe-897b-2c905886bebd.png)  
-    Eps ↑  
+   
+   Eps ↑  
     
    ![image](https://user-images.githubusercontent.com/82145878/179248609-d6689252-1ac8-4fc3-a1d2-fcd14d919b8c.png)  
-    Eps ↑, samples ↑  
+   
+   Eps ↑, samples ↑  
     
    ![image](https://user-images.githubusercontent.com/82145878/179248681-c4f25234-5a50-4441-86e1-1b9f70db40f7.png)  
-    Eps ↑, samples ↓  
+   
+   Eps ↑, samples ↓  
     
    ![image](https://user-images.githubusercontent.com/82145878/179248776-16272f1a-dd20-4e01-bada-9e350e53c6d3.png)  
-    Eps ↓, samples ↑  
+   
+   Eps ↓, samples ↑  
     
    ![image](https://user-images.githubusercontent.com/82145878/179248850-1fda434a-4762-4ae1-bf77-184e6b8ce5ec.png)  
-    Eps ↓, samples ↓  
+   
+   Eps ↓, samples ↓  
+    
     
    * DBSCAN vs Other Clustering  
    ![image](https://user-images.githubusercontent.com/82145878/179249057-04c348d0-6c9e-4dd4-b465-b121791bdbec.png)  
     
-   * 장점
+   * 장점  
     - 노이즈에 매우 둔간함 군집화 가능  
     - 임의의 모양을 갖는 군집을 생성할 수 있음  
    * 단점  
