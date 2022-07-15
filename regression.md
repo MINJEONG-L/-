@@ -78,6 +78,8 @@
 * 주로 R^2 MSE RMSE 누가 더 0에 에러가 가깝게 예측을 햇느냐가 평가 지표가 된다.  
 * 회귀 평가 지표 MAE는 잘 안씀  
 
+![image](https://user-images.githubusercontent.com/82145878/179231070-9702b39a-1c16-420c-b22a-35f15e77fb45.png)  
+
 
 
 
